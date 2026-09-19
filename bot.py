@@ -14,6 +14,10 @@ async def main():
     print("Scanner pronto.")
     print("Asset:", ASSET)
 
+    while True:
+        print("Bot attivo...")
+        await asyncio.sleep(60)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
