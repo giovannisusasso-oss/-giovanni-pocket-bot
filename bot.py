@@ -1,36 +1,35 @@
 import os
 import time
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from threading import Thread
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
-PORT = int(os.environ.get("PORT", 10000))
+PORT = int(os.environ.get("PORT", "10000"))
 
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b"Giovanni Pocket Bot is running!")
+        self.wfile.write(b"Giovanni Pocket Bot OK")
 
     def log_message(self, format, *args):
-        pass
+        return
 
 
-def start_server():
-    server = HTTPServer(("0.0.0.0", PORT), Handler)
-    print(f"Server attivo sulla porta {PORT}")
-    server.serve_forever()
+def server():
+    httpd = HTTPServer(("0.0.0.0", PORT), Handler)
+    print("WEB SERVER OK - PORTA", PORT, flush=True)
+    httpd.serve_forever()
 
 
-print("Giovanni Pocket Bot avviato!")
-print("Scanner pronto.")
-print("Asset: EURUSD_otc")
+print("GIOVANNI POCKET BOT AVVIATO", flush=True)
+print("SCANNER PRONTO - EURUSD_otc", flush=True)
 
-Thread(target=start_server, daemon=True).start()
+threading.Thread(target=server, daemon=True).start()
 
 while True:
-    print("Bot attivo...")
-    time.sleep(60)
+    print("BOT ATTIVO", flush=True)
+    time.sleep(30)
     
 
     
