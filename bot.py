@@ -1,3 +1,9 @@
+try:
+    import pocket_option
+    print("POCKET OPTION LIBRARY OK", flush=True)
+except Exception as e:
+    print("POCKET OPTION LIBRARY ERROR:", e, flush=True)
+
 import os
 import time
 import threading
