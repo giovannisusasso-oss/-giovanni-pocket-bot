@@ -1,18 +1,12 @@
-import asyncio
 import os
+import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from threading import Thread
 
-from pocket_option import PocketOptionClient
-
-PO_SESSION = os.getenv("PO_SESSION")
-PO_UID = os.getenv("PO_UID")
-
-ASSET = "EURUSD_otc"
-PORT = int(os.getenv("PORT", "10000"))
+PORT = int(os.environ.get("PORT", 10000))
 
 
-class HealthHandler(BaseHTTPRequestHandler):
+class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
@@ -23,29 +17,20 @@ class HealthHandler(BaseHTTPRequestHandler):
 
 
 def start_server():
-    server = HTTPServer(("0.0.0.0", PORT), HealthHandler)
+    server = HTTPServer(("0.0.0.0", PORT), Handler)
+    print(f"Server attivo sulla porta {PORT}")
     server.serve_forever()
 
 
-async def main():
-    Thread(target=start_server, daemon=True).start()
+print("Giovanni Pocket Bot avviato!")
+print("Scanner pronto.")
+print("Asset: EURUSD_otc")
 
-    print("Giovanni Pocket Bot avviato!")
-    print("Scanner pronto.")
-    print("Asset:", ASSET)
+Thread(target=start_server, daemon=True).start()
 
-    while True:
-        print("Bot attivo...")
-        await asyncio.sleep(60)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
-
-
-
-
-    
+while True:
+    print("Bot attivo...")
+    time.sleep(60)
     
 
     
